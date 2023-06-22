@@ -1,0 +1,95 @@
+maven이나 gradel은 pom.xml에 뭘 사용할지 명시만 해주면 된다. (jar파일 다운 필요x)
+
+
+fom.xlm
+maven
+form.controller 
+home.jsp
+
+
+
+Spring 프레임 워크를 사용하는 근본적인 이유?
+
+-프로젝트의 규모가 큰 경우에 유지 보수를 편하게 하기 위해서 사용한다. 
+-클래스들(객체들) 간의 의존 관계가 느슨해야 유지 보수가 편하다.
+-어떻게 해야 의존 관계가 느슨해 지는걸까?
+ 1.필요한 핵심의존 객체를 직접 생성하지 않고 주입(Dependencies injection) 받아서 사용한다.
+주입을 받을 객체도 spring이 관리를 해야한다.
+ 2.객체의 생성과 관리를 spring 프레임 워크에 맡긴다.
+ 3.인터페이스 type을 적극 활용한다.
+ 
+
+파일명 mapper이름이 다르면 DB연동이 안됨
+
+bean이 된다=spring이 관리하는 객체가 된다. 
+
+spring bean container:필요한 핵심 의좀 객체를 생성해서 관리 되는 곳
+
+sevlet-context.xml을 dispatcher servlet이 읽어내서 어떤 정보를 관리 할지.
+
+
+[시험]
+1.EL JSTL
+
+2.Bootstrap css 활용
+
+3.Spring 서버 셋팅
+
+4.프로젝트 기본 셋팅(pom.xml 수정후 update)
+
+5.컨트롤러 만들기(요청맵핑,응답)
+
+6.view page 만들기
+
+7.MyBatis 기반의 DB 연동 셋팅 및 연동
+
+	<!-- ${dto.num }는 requestScope.dto.num을 줄여서 표현 -->
+				<input type="text" name="num" id="${dto.num }" readonly/>
+
+
+mybatis 기반으로 DB연동을 하기 위해 핵심 의존 객체를 dependency injection 받는다.(주입 가능한 이유는
+어노테이션을 통해서 bean이 되었으니까)
+@Autowired
+	private SqlSession session;
+
+
+
+	@Override
+	public GuestDto getData(int num) {
+		/*
+		 * Mapper의 name space는 guest
+		 * sql의 id 는 getdata
+		 * parameterType은 int
+		 * resultType은 GuestDto
+		 */
+		return session.selectOne("guest.getData",num);
+	}
+
+
+
+public void insert(GuestDto dto) {
+		/*
+		 * Mapper's namespace=guest
+		 * sql's id=insert
+		 * parameter type=GuestDto
+		 */
+		session.insert("guest.insert", dto);
+		
+	}
+
+
+view페이지들은 controller에서 forward해서 응답을 위임 받아야 한다.
+
+
+
+framework와 라이브러리 차이점
+
+
+
+interceptor 등록-servlet context
+
+
+
+
+
+
