@@ -24,13 +24,24 @@
 	<!-- MyInterceptor가 bean이 되도록 한다. -->
 	<!-- myInterceptor=new MyInterceptor() -->
 	<beans:bean id="myInterceptor" class="com.gura.spring03.interceptor.MyInterceptor"/>
-	
+	<beans:bean id="loginInterceptor" class="com.gura.spring03.interceptor.LoginInterceptor"></beans:bean>
 	<!-- 인터셉터 등록 -->
 	<interceptors>
 		<interceptor>
 		<!-- MyInterceptor가 /play 요청에 대해 끼어들도록 설정한다. -->
 			<mapping path="/play"/>
 			<beans:ref bean="myInterceptor"/>		
+		</interceptor>
+		<!-- 	
+			/users하위의 모든 요청에 대해 loginInterceptor 가 끼어들도록 설정한다
+			단,/users/login /users/loginform에 대해서 예외로 한다.exclude
+		 -->
+	
+		<interceptor>
+			<mapping path="/users/*"/>
+			<exclude-mapping path="/users/loginform"/>
+			<exclude-mapping path="/users/login"/>
+			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 	</interceptors>
 	
