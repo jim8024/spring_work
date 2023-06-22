@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<!-- select된 row를 하나 하나를 어떤 객체에 담을지 정해주어야한다. List generic이 무엇으로 할지 선언하는 것에 따라 달라진다. 
+			
+		column의 이름과 필드명이 같아야한다.
+	-->
+	 <select id="getData" parameterType="int" resultType="com.gura.spring02.member.dto.MemberDto">
+	 	SELECT num, name, addr 
+	 	FROM member
+	 	WHERE num=#{num}
+	 </select>
+	
+	<update id="update" parameterType="com.gura.spring02.member.dto.MemberDto">
+		UPDATE member
+		SET name=#{name}, addr=#{addr}
+		WHERE num=#{num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM member
+		WHERE num=#{num}
+	</delete>
+	
+	<select id="getList" resultType="com.gura.spring02.member.dto.MemberDto">
+		SELECT num, name, addr
+		From member
+		ORDER BY num ASC
+	</select>
+
+	<insert id="insert" parameterType="com.gura.spring02.member.dto.MemberDto">
+		INSERT INTO member
+		(num, name, addr)
+		VALUES(member_seq.NEXTVAL, #{name}, #{addr})
+	</insert>	
+</mapper>
