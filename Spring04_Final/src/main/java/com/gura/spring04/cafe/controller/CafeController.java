@@ -16,6 +16,31 @@ public class CafeController {
 	@Autowired
 	private CafeService service;
 	
+		@RequestMapping("/cafe/ajax_comment_list")
+		public String commentList(HttpServletRequest request) {
+			
+			try {
+				Thread.sleep(3000);
+			}catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			service.moreCommentList(request);
+			
+			return "cafe/ajax_comment_list";
+		}
+	
+	
+	
+	
+	   @RequestMapping("/cafe/comment_insert")
+	   public String commentInsert(HttpServletRequest request,int ref_group) {
+		   //새로운댓글을 저장하는 로직을 수행한다
+		   service.saveComment(request);
+		   //ref group은 원글의 글번호 이기 때문에 원글 자세히 보기로 다시 리다일렉트 한다
+		   return "redirect:/cafe/detail?num="+ref_group;
+	   }
+	
 	   @RequestMapping("/cafe/list")
 	   public String list(HttpServletRequest request) {
 		   //서비스에 HttpServletRequest 객체를 전달해서 필요한 데이타가 담기도록하고
