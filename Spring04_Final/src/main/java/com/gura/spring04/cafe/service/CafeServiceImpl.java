@@ -257,14 +257,19 @@ public class CafeServiceImpl implements CafeService{
 	
 	@Override
 	public void deleteComment(HttpServletRequest request) {
-		// TODO Auto-generated method stub
+		int num=Integer.parseInt(request.getParameter("num"));
+		CafeCommentDto dto = cafeCommentDao.getData(num);
+		String id=(String)request.getSession().getAttribute("id");
 		
+		if(!dto.getWriter().equals(id)) {
+			throw new NotDeleteException("댓글 지우지 마세요");
+		}
+		cafeCommentDao.delete(num);
 	}
 	
 	@Override
 	public void updateComment(CafeCommentDto dto) {
-		// TODO Auto-generated method stub
-		
+			cafeCommentDao.update(dto);
 	}
 	
 	@Override

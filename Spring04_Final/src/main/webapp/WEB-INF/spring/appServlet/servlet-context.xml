@@ -18,21 +18,16 @@
 		<beans:property name="dataSource" ref="dataSource"/>
 		<beans:property name="configLocation" value="classpath:Configuration.xml"/>
 	</beans:bean>
-
 	<beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg name="sqlSessionFactory" 
 			ref="sessionFactory"/>
 	</beans:bean>
-
-
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
-
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
@@ -66,8 +61,14 @@
 			<exclude-mapping path="/cafe/ajax_comment_list"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
+		<interceptor>
+			<mapping path="/gallery/*"/>
+			<exclude-mapping path="/gallery/list"/>
+			<exclude-mapping path="/gallery/detail"/>
+			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
 	</interceptors>
-	
+
 	<!-- 
 		Multipart 폼 전송 처리를 위한 bean 설정 
 		최대 업로드 사이즈 제한하기 
@@ -89,5 +90,3 @@
 	</beans:bean>
 	
 </beans:beans>
-
-
